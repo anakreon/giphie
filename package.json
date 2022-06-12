@@ -6,9 +6,14 @@
         "start": "ng serve",
         "build": "ng build",
         "watch": "ng build --watch --configuration development",
-        "test": "ng test",
+        "tdd": "ng test",
+        "test": "ng test --no-watch",
         "format": "prettier --write \"src/**/*.{ts,js,html,json}\""
     },
+    "pre-commit": [
+        "format",
+        "test"
+    ],
     "private": true,
     "dependencies": {
         "@angular/animations": "^14.0.0",
@@ -38,6 +43,7 @@
         "karma-coverage": "~2.2.0",
         "karma-jasmine": "~5.0.0",
         "karma-jasmine-html-reporter": "~1.7.0",
+        "pre-commit": "^1.2.2",
         "prettier": "^2.6.2",
         "typescript": "~4.7.2"
     }
