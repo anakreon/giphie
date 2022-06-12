@@ -1,39 +1,20 @@
 <section class="container">
-    <h1>Library</h1>
-    <form class="row" [formGroup]="filterForm" (ngSubmit)="filter()">
-        <div class="col">
-            <div class="form-group">
-                <label for="filter">Filter</label>
-                <input
-                    type="text"
-                    class="form-control"
-                    id="filter"
-                    placeholder="Enter filter"
-                    formControlName="filter"
-                />
-            </div>
-            <button type="submit" class="btn btn-primary">Submit</button>
-        </div>
-    </form>
-    <ngb-pagination
-        *ngIf="pagination"
-        class="row"
-        [(page)]="pagination.currentPage"
-        [pageSize]="pagination.itemsPerPage"
-        [maxSize]="10"
-        [collectionSize]="pagination.totalItems"
-        (pageChange)="onPageChange()"
-    ></ngb-pagination>
-    <section class="preview row">
-        <div *ngFor="let image of images" class="card">
-            <img class="card-img-top" [src]="image.images.original.url" alt="Card image cap" />
-            <div class="card-body">
-                <h5 class="card-title">{{ image.title }}</h5>
-                <p class="card-text">
-                    {{ image.source_tld }}
-                </p>
-                <a [href]="image.url" target="_blank" class="btn btn-primary">Open</a>
-            </div>
-        </div>
+    <h1>Giphie Gallery</h1>
+    <section class="row">
+        <app-filter class="col" [value]="filter" (updateFilterValue)="updateWithFilter($event)"></app-filter>
+        <div class="col">asdf</div>
+    </section>
+    <section class="d-flex justify-content-center">
+        <ngb-pagination
+            *ngIf="pagination"
+            [(page)]="pagination.currentPage"
+            [pageSize]="pagination.itemsPerPage"
+            [collectionSize]="pagination.totalItems"
+            [maxSize]="5"
+            (pageChange)="updateData()"
+        ></ngb-pagination>
+    </section>
+    <section class="row">
+        <app-gallery class="col" [images]="images"></app-gallery>
     </section>
 </section>

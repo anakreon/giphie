@@ -1,0 +1,15 @@
+<form [formGroup]="filterForm" (ngSubmit)="submit()">
+    <section class="form-group">
+        <label for="filter">Text Filter</label>
+        <input
+            type="text"
+            class="form-control"
+            id="filter"
+            placeholder="Enter filter"
+            aria-describedby="filterHelp"
+            formControlName="filter"
+        />
+        <small id="filterHelp" class="form-text text-muted">Input your favourite topic for Giphy.</small>
+    </section>
+    <button type="submit" class="btn btn-primary">Filter</button>
+</form>

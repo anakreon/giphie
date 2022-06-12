@@ -1,3 +1,4 @@
+// needed for testing since Giphy API has hourly limit on the number of API calls
 export default {
     data: [
         {

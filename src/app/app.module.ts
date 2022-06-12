@@ -6,10 +6,12 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap';
+import { FilterComponent } from './filter/filter.component';
+import { GalleryComponent } from './gallery/gallery.component';
 
 @NgModule({
-    declarations: [AppComponent],
     imports: [BrowserModule, AppRoutingModule, HttpClientModule, ReactiveFormsModule, NgbPaginationModule],
+    declarations: [AppComponent, FilterComponent, GalleryComponent],
     providers: [],
     bootstrap: [AppComponent]
 })

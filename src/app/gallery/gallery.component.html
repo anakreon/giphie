@@ -1,0 +1,12 @@
+<section class="gallery">
+    <article class="card" *ngFor="let image of images">
+        <img class="card-img-top" [src]="image.url" [alt]="image.title" />
+        <section class="card-body">
+            <h5 class="card-title">{{ image.title }}</h5>
+            <p class="card-text">
+                {{ image.description }}
+            </p>
+            <a [href]="image.sourceUrl" target="_blank" class="btn btn-primary">See details</a>
+        </section>
+    </article>
+</section>
