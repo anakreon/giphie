@@ -3,6 +3,12 @@ import { FormControl, FormGroup } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { GiphyService } from './giphy.service';
 
+interface Pagination {
+    currentPage: number;
+    itemsPerPage: number;
+    totalItems: number;
+}
+
 @Component({
     selector: 'app-root',
     templateUrl: './app.component.html',
@@ -12,40 +18,46 @@ export class AppComponent implements OnInit {
     public images: any = [];
     private subscription!: Subscription;
     public filterForm = new FormGroup({
-        filter: new FormControl('')
+        filter: new FormControl('dog')
     });
 
-    public page = 1;
-    public pageSize = 20;
-    public collectionSize = 100;
+    public pagination: Pagination = {
+        currentPage: 1,
+        itemsPerPage: 0,
+        totalItems: 0
+    };
 
     constructor(private giphyService: GiphyService) {}
 
-    ngOnInit() {
-        const tag = 'dog';
+    ngOnInit(): void {
         const offset = 0;
-        this.giphyService.search(tag, offset);
+        const filter = this.filterForm.value.filter;
+        this.giphyService.updateImages(filter as string, offset);
         this.subscription = this.giphyService.getImages().subscribe((result) => {
-            this.images = result.data.slice(0, 9);
+            this.images = result.data;
+            this.pagination = {
+                currentPage: result.pagination.offset + 1,
+                itemsPerPage: result.pagination.count,
+                totalItems: result.pagination.total_count
+            };
         });
     }
 
-    ngOnDestroy() {
+    ngOnDestroy(): void {
         if (this.subscription) {
             this.subscription.unsubscribe();
         }
     }
 
-    public filter() {
+    public filter(): void {
         if (this.filterForm.valid) {
             const filter = this.filterForm.value.filter;
-            this.giphyService.search(filter as string);
-            this.filterForm.reset();
+            this.giphyService.updateImages(filter as string);
         }
     }
 
-    public onPageChange() {
-        console.log('changed');
-        console.log(this.page, this.pageSize, this.collectionSize);
+    public onPageChange(): void {
+        const filter = this.filterForm.value.filter;
+        this.giphyService.updateImages(filter as string, this.pagination.currentPage - 1, this.pagination.itemsPerPage);
     }
 }

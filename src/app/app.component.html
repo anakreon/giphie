@@ -16,10 +16,12 @@
         </div>
     </form>
     <ngb-pagination
+        *ngIf="pagination"
         class="row"
-        [(page)]="page"
-        [pageSize]="pageSize"
-        [collectionSize]="collectionSize"
+        [(page)]="pagination.currentPage"
+        [pageSize]="pagination.itemsPerPage"
+        [maxSize]="10"
+        [collectionSize]="pagination.totalItems"
         (pageChange)="onPageChange()"
     ></ngb-pagination>
     <section class="preview row">
