@@ -1,8 +1,7 @@
 <section class="container">
     <h1>Giphie Gallery</h1>
     <section class="row">
-        <app-filter class="col" [value]="filter" (updateFilterValue)="updateWithFilter($event)"></app-filter>
-        <div class="col">asdf</div>
+        <app-filter [value]="filter" (updateFilterValue)="updateWithFilter($event)"></app-filter>
     </section>
     <section class="d-flex justify-content-center">
         <ngb-pagination
