@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { map, Observable, of } from 'rxjs';
+import { map, Observable } from 'rxjs';
+import { EnvironmentService } from './environment.service';
 import mockresponse from './mockresponse';
 import { Image, Pagination } from './types';
 
@@ -38,10 +39,7 @@ export interface GiphyResponse {
     providedIn: 'root'
 })
 export class GiphyApiService {
-    private readonly searchUrl = 'https://api.giphy.com/v1/gifs/search';
-    private readonly apiKey = 'RrwgHQq4CEW1Cylv7WDXxQPdL0mQKbuC';
-
-    constructor(private http: HttpClient) {}
+    constructor(private http: HttpClient, private environmentService: EnvironmentService) {}
 
     public search(query: string, pagination: Pagination): Observable<GiphyResponse> {
         const offset = this.convertCurrentPageToOffset(pagination.currentPage);
@@ -52,14 +50,15 @@ export class GiphyApiService {
     }
 
     private queryGiphySearchAPI(query: string, offset: number, limit: number): Observable<RawGiphySearchResponse> {
+        const environment = this.environmentService.getEnvironment();
         const params = new URLSearchParams({
-            api_key: this.apiKey,
+            api_key: environment.giphy.apiKey,
             q: query,
             limit: limit.toString(),
             offset: offset.toString()
         });
         //return of(mockresponse as any); // to return the mocked API value
-        return this.http.get<RawGiphySearchResponse>(this.searchUrl + '?' + params.toString());
+        return this.http.get<RawGiphySearchResponse>(environment.giphy.searchApiUrl + '?' + params.toString());
     }
 
     // this step is not strictly necessary, but
