@@ -58,8 +58,8 @@ describe('GiphyApiService', () => {
                 ],
                 pagination: {
                     total_count: 200,
-                    count: 20,
-                    offset: 2
+                    count: 10,
+                    offset: 20
                 },
                 meta: {
                     status: 200
@@ -83,7 +83,7 @@ describe('GiphyApiService', () => {
                 ],
                 pagination: {
                     currentPage: 3,
-                    itemsPerPage: 20,
+                    itemsPerPage: 10,
                     totalItems: 200
                 }
             };

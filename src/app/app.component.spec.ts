@@ -82,7 +82,7 @@ describe('AppComponent', () => {
         fixture.whenStable().then(() => {
             fixture.detectChanges();
             const req = httpTestingController.expectOne(
-                'https://api.giphy.com/v1/gifs/search?api_key=RrwgHQq4CEW1Cylv7WDXxQPdL0mQKbuC&q=cat&limit=9&offset=2'
+                'https://api.giphy.com/v1/gifs/search?api_key=RrwgHQq4CEW1Cylv7WDXxQPdL0mQKbuC&q=cat&limit=9&offset=18'
             );
             expect(req.request.method).toEqual('GET');
             req.flush(mockResponse);

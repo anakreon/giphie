@@ -42,7 +42,7 @@ export class GiphyApiService {
     constructor(private http: HttpClient, private environmentService: EnvironmentService) {}
 
     public search(query: string, pagination: Pagination): Observable<GiphyResponse> {
-        const offset = this.convertCurrentPageToOffset(pagination.currentPage);
+        const offset = this.convertCurrentPageToOffset(pagination.currentPage, pagination.itemsPerPage);
         const limit = pagination.itemsPerPage;
         return this.queryGiphySearchAPI(query, offset, limit).pipe(
             map((rawResponse: RawGiphySearchResponse) => this.processResponse(rawResponse))
@@ -75,18 +75,18 @@ export class GiphyApiService {
         return {
             images,
             pagination: {
-                currentPage: this.convertOffsetToCurrentPage(rawResponse.pagination.offset),
+                currentPage: this.convertOffsetToCurrentPage(rawResponse.pagination.offset, itemsPerPage),
                 itemsPerPage,
                 totalItems
             }
         };
     }
 
-    private convertOffsetToCurrentPage(offset: number): number {
-        return offset + 1;
+    private convertOffsetToCurrentPage(offset: number, itemsPerPage: number): number {
+        return offset / itemsPerPage + 1;
     }
 
-    private convertCurrentPageToOffset(currentPage: number): number {
-        return currentPage - 1;
+    private convertCurrentPageToOffset(currentPage: number, itemsPerPage: number): number {
+        return (currentPage - 1) * itemsPerPage;
     }
 }
